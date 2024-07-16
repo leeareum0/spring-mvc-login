@@ -41,7 +41,12 @@ public class SessionManger {
     }
 
     //세션 만료
-
+    public void expire(HttpServletRequest request) {
+        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
+        if (sessionCookie != null) {
+            sessionStore.remove(sessionCookie.getValue());
+        }
+    }
 
     private Cookie findCookie(HttpServletRequest request, String cookieName) {
 
