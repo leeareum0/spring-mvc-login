@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import static hello.login.web.SessionConst.LOGIN_MEMBER;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -94,10 +92,20 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @PostMapping("/logout")
+//    @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
 
         sessionManger.expire(request);
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logoutV2(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); //세션 제거
+        }
         return "redirect:/";
     }
 }
